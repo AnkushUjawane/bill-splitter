@@ -1,0 +1,21 @@
+.notice {
+  padding: 12px 14px;
+  margin: 12px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--card);
+}
+
+.notice p {
+  margin: 0 0 8px;
+}
+
+.notice p:last-child {
+  margin-bottom: 0;
+}
+
+.error {
+  border-color: transparent;
+  background: var(--err-bg);
+  color: var(--err-text);
+}
