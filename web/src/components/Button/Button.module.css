@@ -1,0 +1,38 @@
+.button {
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+/* Main action. */
+.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+/* Quiet outlined button, takes the color of the text around it. */
+.secondary {
+  background: transparent;
+  color: inherit;
+  border-color: currentColor;
+}
+
+/* Green: a good outcome, like paying. */
+.success {
+  background: var(--ok-text);
+  color: var(--card);
+}
+
+/* Red: a risky or destructive action. */
+.danger {
+  background: var(--err-text);
+  color: var(--card);
+}

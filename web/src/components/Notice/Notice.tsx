@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Button } from '../Button/Button'
 import styles from './Notice.module.css'
 
 type Props = {
@@ -18,9 +19,9 @@ export function Notice({ tone = 'info', onRetry, retryLabel = 'Try again', child
     >
       <p>{children}</p>
       {onRetry && (
-        <button type="button" onClick={onRetry}>
+        <Button type="button" onClick={onRetry}>
           {retryLabel}
-        </button>
+        </Button>
       )}
     </div>
   )

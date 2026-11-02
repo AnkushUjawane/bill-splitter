@@ -42,3 +42,8 @@
   color: var(--err-text);
   font-size: 0.9rem;
 }
+
+.title {
+  margin: 0;
+  font-size: 1.05rem;
+}

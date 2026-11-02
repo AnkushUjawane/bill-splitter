@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { type Bill, describeError, payShare, type Share } from '../../lib/api'
 import { formatCents, formatDate } from '../../lib/format'
+import { Button } from '../Button/Button'
 import { Card } from '../Card/Card'
 import styles from './BillCard.module.css'
 
@@ -47,9 +48,9 @@ function ShareRow({ billId, share, onChanged }: ShareRowProps) {
               Paid
             </span>
           ) : (
-            <button type="button" onClick={handlePay} disabled={pending}>
+            <Button variant="success" onClick={handlePay} disabled={pending}>
               {pending ? 'Paying…' : 'Pay'}
-            </button>
+            </Button>
           )}
         </span>
       </div>

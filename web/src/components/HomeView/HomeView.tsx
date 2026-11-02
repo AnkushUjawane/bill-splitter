@@ -3,6 +3,7 @@ import { getBalances, getBills } from '../../lib/api'
 import { useLoad } from '../../lib/useLoad'
 import { Balances } from '../Balances/Balances'
 import { BillCard } from '../BillCard/BillCard'
+import { Button } from '../Button/Button'
 import { Notice } from '../Notice/Notice'
 import styles from './HomeView.module.css'
 
@@ -22,7 +23,12 @@ export function HomeView({ homeId }: { homeId: string }) {
   return (
     <>
       <p className={styles.homeLine}>
-        Home <code>{homeId}</code> · <Link to="/">Choose another home</Link>
+        <span>
+          Home : <code>{homeId}</code>
+        </span>
+        <Link to="/" className="choose-btn">
+          <Button>Choose another home</Button>
+        </Link>
       </p>
 
       {refreshError && (
