@@ -66,3 +66,82 @@ bills.post('/:homeId/bills', async (c) => {
 
   return c.json({ id: billId, homeId, title, totalCents, shares: results }, 201)
 })
+
+type BillShareRow = {
+  billId: string
+  title: string
+  totalCents: number
+  createdAt: string
+  shareId: string
+  memberId: string
+  memberName: string
+  amountCents: number
+  paidAt: string | null
+}
+
+type BillWithShares = {
+  id: string
+  homeId: string
+  title: string
+  totalCents: number
+  createdAt: string
+  shares: {
+    id: string
+    memberId: string
+    memberName: string
+    amountCents: number
+    paidAt: string | null
+  }[]
+}
+
+// Lists the bills of a home, newest first, each with its shares (in member order).
+// The web page needs this to show bills; the member name saves it a second request.
+bills.get('/:homeId/bills', async (c) => {
+  const homeId = c.req.param('homeId')
+  const db = c.env.DB
+
+  // One batch = one consistent snapshot for the home check and the bill rows.
+  const [home, rows] = await db.batch<{ id: string } | BillShareRow>([
+    db.prepare('SELECT id FROM homes WHERE id = ?').bind(homeId),
+    db
+      .prepare(
+        `SELECT b.id AS billId, b.title AS title, b.total_cents AS totalCents,
+                b.created_at AS createdAt, s.id AS shareId, s.member_id AS memberId,
+                m.name AS memberName, s.amount_cents AS amountCents, s.paid_at AS paidAt
+         FROM bills b
+         JOIN shares s ON s.bill_id = b.id
+         JOIN members m ON m.id = s.member_id
+         WHERE b.home_id = ?
+         ORDER BY b.seq DESC, s.seq`,
+      )
+      .bind(homeId),
+  ])
+
+  if (!home?.results.length) throw new HttpError(404, 'Home not found')
+
+  // The rows are flat (one per share). Group them back into bills, keeping order.
+  const grouped = new Map<string, BillWithShares>()
+  for (const row of (rows?.results ?? []) as BillShareRow[]) {
+    let bill = grouped.get(row.billId)
+    if (!bill) {
+      bill = {
+        id: row.billId,
+        homeId,
+        title: row.title,
+        totalCents: row.totalCents,
+        createdAt: row.createdAt,
+        shares: [],
+      }
+      grouped.set(row.billId, bill)
+    }
+    bill.shares.push({
+      id: row.shareId,
+      memberId: row.memberId,
+      memberName: row.memberName,
+      amountCents: row.amountCents,
+      paidAt: row.paidAt,
+    })
+  }
+
+  return c.json({ bills: [...grouped.values()] })
+})
