@@ -1,5 +1,6 @@
 import { useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useState } from 'react'
+import { Button } from '../Button/Button'
 import { Card } from '../Card/Card'
 import styles from './OpenHomeForm.module.css'
 
@@ -29,10 +30,11 @@ export function OpenHomeForm() {
           id="home-id"
           value={value}
           onChange={(event) => setValue(event.target.value)}
+          className={styles.input}
           placeholder="Paste a home ID"
           autoComplete="off"
         />
-        <button type="submit">Open</button>
+        <Button type="submit">Open</Button>
       </form>
       {error && (
         <p className={styles.error} role="alert">
