@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { CreateHomeForm } from '../components/CreateHomeForm/CreateHomeForm'
 import { HomeView } from '../components/HomeView/HomeView'
 import { OpenHomeForm } from '../components/OpenHomeForm/OpenHomeForm'
 import { Page } from '../components/Page/Page'
@@ -18,9 +19,15 @@ function HomePage() {
   const { homeId } = Route.useSearch()
 
   return (
-    <Page>
-      <h1>Bill Splitter</h1>
-      {homeId ? <HomeView key={homeId} homeId={homeId} /> : <OpenHomeForm />}
+    <Page title="Bill Splitter">
+      {homeId ? (
+        <HomeView key={homeId} homeId={homeId} />
+      ) : (
+        <>
+          <CreateHomeForm />
+          <OpenHomeForm />
+        </>
+      )}
     </Page>
   )
 }

@@ -9,8 +9,7 @@ type Props = { state: LoadState<Balance[]>; onRetry: () => void }
 
 export function Balances({ state, onRetry }: Props) {
   return (
-    <Card>
-      <h2 className={styles.title}>Who owes what</h2>
+    <Card title="Who owes what">
       {state.status === 'loading' && <p role="status">Loading balances…</p>}
       {state.status === 'error' && (
         <Notice tone="error" onRetry={onRetry}>

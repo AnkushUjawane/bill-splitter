@@ -1,6 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { getBalances, getBills } from '../../lib/api'
 import { useLoad } from '../../lib/useLoad'
+import { AddBillForm } from '../AddBillForm/AddBillForm'
+import { AddMemberForm } from '../AddMemberForm/AddMemberForm'
 import { Balances } from '../Balances/Balances'
 import { BillCard } from '../BillCard/BillCard'
 import { Button } from '../Button/Button'
@@ -38,8 +40,10 @@ export function HomeView({ homeId }: { homeId: string }) {
       )}
 
       <Balances state={balances.state} onRetry={balances.retry} />
+      <AddMemberForm homeId={homeId} onAdded={() => void balances.refresh()} />
 
-      <h2>Bills</h2>
+      <h2 className={styles.heading}>Bills</h2>
+      <AddBillForm homeId={homeId} onCreated={refreshAll} />
       {state.status === 'loading' && <p role="status">Loading bills…</p>}
 
       {state.status === 'error' && state.httpStatus === 404 && (

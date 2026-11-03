@@ -73,6 +73,14 @@ async function request(path: string, init: RequestInit = {}): Promise<unknown> {
   }
 }
 
+async function postJson(path: string, data: unknown): Promise<unknown> {
+  return request(path, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+}
+
 const unexpected = () => new ApiError('The server sent an answer we did not understand.', null)
 
 export async function getBills(homeId: string): Promise<Bill[]> {
@@ -103,4 +111,23 @@ export async function payShare(
 export function describeError(error: unknown): { message: string; status: number | null } {
   if (error instanceof ApiError) return { message: error.message, status: error.status }
   return { message: 'Something went wrong.', status: null }
+}
+
+export async function createHome(name: string): Promise<{ id: string }> {
+  const body = await postJson('/api/homes', { name })
+  if (!isRecord(body) || typeof body.id !== 'string') throw unexpected()
+  return { id: body.id }
+}
+
+export async function addMember(homeId: string, name: string): Promise<void> {
+  const body = await postJson(`/api/homes/${encodeURIComponent(homeId)}/members`, { name })
+  if (!isRecord(body) || typeof body.id !== 'string') throw unexpected()
+}
+
+export async function createBill(homeId: string, title: string, totalCents: number): Promise<void> {
+  const body = await postJson(`/api/homes/${encodeURIComponent(homeId)}/bills`, {
+    title,
+    totalCents,
+  })
+  if (!isRecord(body) || typeof body.id !== 'string') throw unexpected()
 }

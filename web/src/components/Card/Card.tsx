@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react'
 import styles from './Card.module.css'
 
-type Props = { as?: 'section' | 'article'; children: ReactNode }
+type Props = { as?: 'section' | 'article'; title?: string; children: ReactNode }
 
-// A white box with a border. Used for balances, bills and the "open a home" form.
-export function Card({ as: Tag = 'section', children }: Props) {
-  return <Tag className={styles.card}>{children}</Tag>
+export function Card({ as: Tag = 'section', title, children }: Props) {
+  return (
+    <Tag className={styles.card}>
+      {title && <h2 className={styles.title}>{title}</h2>}
+      {children}
+    </Tag>
+  )
 }

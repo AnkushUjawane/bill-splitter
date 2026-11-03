@@ -2,6 +2,8 @@ import { useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useState } from 'react'
 import { Button } from '../Button/Button'
 import { Card } from '../Card/Card'
+import { Notice } from '../Notice/Notice'
+import { TextField } from '../TextField/TextField'
 import styles from './OpenHomeForm.module.css'
 
 export function OpenHomeForm() {
@@ -20,41 +22,19 @@ export function OpenHomeForm() {
   }
 
   return (
-    <Card>
-      <h2 className={styles.title}>Open a home</h2>
+    <Card title="Open an existing home">
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="home-id" className={styles.hidden}>
-          Home ID
-        </label>
-        <input
-          id="home-id"
+        <TextField
+          label="Home ID"
           value={value}
-          onChange={(event) => setValue(event.target.value)}
-          className={styles.input}
+          onChange={setValue}
           placeholder="Paste a home ID"
-          autoComplete="off"
         />
-        <Button type="submit">Open</Button>
+        <Button type="submit" variant="secondary">
+          Open
+        </Button>
       </form>
-      {error && (
-        <p className={styles.error} role="alert">
-          {error}
-        </p>
-      )}
-
-      <details className={styles.help}>
-        <summary>How do I get a home ID?</summary>
-        <p>With the API running, create a home, add members, then add a bill:</p>
-        <pre className={styles.code}>{`curl -X POST localhost:8787/api/homes \\
-  -H 'content-type: application/json' -d '{"name":"Flat"}'
-
-curl -X POST localhost:8787/api/homes/HOME_ID/members \\
-  -H 'content-type: application/json' -d '{"name":"Asha"}'
-
-curl -X POST localhost:8787/api/homes/HOME_ID/bills \\
-  -H 'content-type: application/json' \\
-  -d '{"title":"Electricity","totalCents":1000}'`}</pre>
-      </details>
+      {error && <Notice tone="error">{error}</Notice>}
     </Card>
   )
 }

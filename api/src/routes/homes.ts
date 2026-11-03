@@ -3,7 +3,13 @@ import { z } from 'zod'
 import { HttpError } from '../errors'
 import { parseBody } from '../validate'
 
-const nameBody = z.object({ name: z.string().trim().min(1).max(100) })
+const nameBody = z.object({
+  name: z
+    .string({ error: 'must be text' })
+    .trim()
+    .min(1, 'must not be empty')
+    .max(100, 'must be at most 100 characters'),
+})
 
 export const homes = new Hono<{ Bindings: Env }>()
 

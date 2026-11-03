@@ -5,8 +5,15 @@ import { parseBody } from '../validate'
 
 // z.number().int() rejects 10.5, "1000" and null. positive() rejects 0 and negatives.
 const billBody = z.object({
-  title: z.string().trim().min(1).max(200),
-  totalCents: z.number().int().positive(),
+  title: z
+    .string({ error: 'must be text' })
+    .trim()
+    .min(1, 'must not be empty')
+    .max(200, 'must be at most 200 characters'),
+  totalCents: z
+    .number({ error: 'must be a whole number of cents' })
+    .int('must be a whole number of cents')
+    .positive('must be greater than 0'),
 })
 
 type ShareRow = { id: string; memberId: string; amountCents: number; paidAt: string | null }
