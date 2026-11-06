@@ -3,7 +3,6 @@ import { type FormEvent, useState } from 'react'
 import { createHome } from '../../lib/api'
 import { useAction } from '../../lib/useAction'
 import { Button } from '../Button/Button'
-import { Card } from '../Card/Card'
 import { Notice } from '../Notice/Notice'
 import { TextField } from '../TextField/TextField'
 import styles from './CreateHomeForm.module.css'
@@ -24,7 +23,7 @@ export function CreateHomeForm() {
   }
 
   return (
-    <Card title="Create a home">
+    <div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <TextField
           label="Home name"
@@ -37,6 +36,6 @@ export function CreateHomeForm() {
         </Button>
       </form>
       {action.error && <Notice tone="error">{action.error}</Notice>}
-    </Card>
+    </div>
   )
 }

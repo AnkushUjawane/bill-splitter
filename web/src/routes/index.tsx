@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { CreateHomeForm } from '../components/CreateHomeForm/CreateHomeForm'
 import { HomeView } from '../components/HomeView/HomeView'
-import { OpenHomeForm } from '../components/OpenHomeForm/OpenHomeForm'
+import { Landing } from '../components/Landing/Landing'
 import { Page } from '../components/Page/Page'
 
 type Search = { homeId?: string }
@@ -18,16 +17,5 @@ export const Route = createFileRoute('/')({
 function HomePage() {
   const { homeId } = Route.useSearch()
 
-  return (
-    <Page title="Bill Splitter">
-      {homeId ? (
-        <HomeView key={homeId} homeId={homeId} />
-      ) : (
-        <>
-          <CreateHomeForm />
-          <OpenHomeForm />
-        </>
-      )}
-    </Page>
-  )
+  return <Page>{homeId ? <HomeView key={homeId} homeId={homeId} /> : <Landing />}</Page>
 }

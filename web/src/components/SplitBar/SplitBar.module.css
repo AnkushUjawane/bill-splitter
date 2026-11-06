@@ -1,0 +1,31 @@
+.bar {
+  display: flex;
+  gap: 4px;
+  height: 14px;
+}
+
+.large {
+  height: 24px;
+  gap: 6px;
+}
+
+.segment {
+  flex-basis: 0;
+  min-width: 6px;
+  border-radius: 6px;
+  /* Not paid yet: an empty slot in that person's color. */
+  background: color-mix(in srgb, var(--member) 22%, transparent);
+  box-shadow: inset 0 0 0 2px var(--member);
+}
+
+/* Paid: filled in. */
+.paid {
+  background: var(--member);
+}
+
+/* The fill-in answers a click on "Pay", so it is the one place that moves. */
+@media (prefers-reduced-motion: no-preference) {
+  .segment {
+    transition: background-color 400ms ease;
+  }
+}

@@ -17,6 +17,7 @@ export type Bill = {
   shares: Share[]
 }
 
+export type HomeBills = { home: { id: string; name: string }; bills: Bill[] }
 export type Balance = { memberId: string; name: string; outstandingCents: number }
 
 // An error with a message that is safe to show to the person using the page.
@@ -83,10 +84,12 @@ async function postJson(path: string, data: unknown): Promise<unknown> {
 
 const unexpected = () => new ApiError('The server sent an answer we did not understand.', null)
 
-export async function getBills(homeId: string): Promise<Bill[]> {
+export async function getBills(homeId: string): Promise<HomeBills> {
   const body = await request(`/api/homes/${encodeURIComponent(homeId)}/bills`)
-  if (!isRecord(body) || !Array.isArray(body.bills)) throw unexpected()
-  return body.bills as Bill[]
+  if (!isRecord(body) || !Array.isArray(body.bills) || !isRecord(body.home)) throw unexpected()
+  const { id, name } = body.home
+  if (typeof id !== 'string' || typeof name !== 'string') throw unexpected()
+  return { home: { id, name }, bills: body.bills as Bill[] }
 }
 
 export async function getBalances(homeId: string): Promise<Balance[]> {

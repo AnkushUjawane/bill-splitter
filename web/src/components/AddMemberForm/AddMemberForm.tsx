@@ -7,9 +7,10 @@ import { Notice } from '../Notice/Notice'
 import { TextField } from '../TextField/TextField'
 import styles from './AddMemberForm.module.css'
 
-type Props = { homeId: string; onAdded: () => void }
+type Props = { homeId: string; onAdded: () => void; onClose: () => void }
 
-export function AddMemberForm({ homeId, onAdded }: Props) {
+// Stays open after adding, so you can add everyone who lives there one after another.
+export function AddMemberForm({ homeId, onAdded, onClose }: Props) {
   const [name, setName] = useState('')
   const action = useAction()
 
@@ -26,9 +27,14 @@ export function AddMemberForm({ homeId, onAdded }: Props) {
     <Card title="Add a member">
       <form onSubmit={handleSubmit} className={styles.form}>
         <TextField label="Name" value={name} onChange={setName} placeholder="For example: Asha" />
-        <Button type="submit" disabled={action.pending}>
-          {action.pending ? 'Adding…' : 'Add member'}
-        </Button>
+        <div className={styles.buttons}>
+          <Button type="submit" disabled={action.pending}>
+            {action.pending ? 'Adding…' : 'Add member'}
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
+            Done
+          </Button>
+        </div>
       </form>
       {action.error && <Notice tone="error">{action.error}</Notice>}
     </Card>

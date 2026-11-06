@@ -1,5 +1,11 @@
 .form {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
+  gap: 12px;
+}
+
+.buttons {
+  display: flex;
   gap: 8px;
 }

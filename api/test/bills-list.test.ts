@@ -14,7 +14,11 @@ type ListedBill = {
   }[]
 }
 
-const list = (homeId: string) => call<{ bills: ListedBill[] }>('GET', `/api/homes/${homeId}/bills`)
+const list = (homeId: string) =>
+  call<{ home: { id: string; name: string }; bills: ListedBill[] }>(
+    'GET',
+    `/api/homes/${homeId}/bills`,
+  )
 
 describe('list bills of a home', () => {
   it('returns an empty list for a home with no bills', async () => {
@@ -23,7 +27,7 @@ describe('list bills of a home', () => {
     const result = await list(homeId)
 
     expect(result.status).toBe(200)
-    expect(result.body).toEqual({ bills: [] })
+    expect(result.body.bills).toEqual([])
   })
 
   it('returns bills newest first, with shares in member order and names', async () => {
@@ -61,6 +65,16 @@ describe('list bills of a home', () => {
     await createBill(a.homeId, 100)
 
     expect((await list(b.homeId)).body.bills).toEqual([])
+  })
+
+  it('includes the home name and id for the page title', async () => {
+    const { homeId } = await createHome(['Asha'])
+
+    const result = await list(homeId)
+
+    expect(result.body.home.id).toBe(homeId)
+    expect(typeof result.body.home.name).toBe('string')
+    expect(result.body.home.name.length).toBeGreaterThan(0)
   })
 
   it('returns 404 when the home does not exist', async () => {

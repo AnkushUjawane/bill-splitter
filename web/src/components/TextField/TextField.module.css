@@ -1,28 +1,40 @@
 .field {
   display: flex;
-  flex: 1;
+  /* Grows to fill a row, but never makes a field taller when forms stack vertically. */
+  flex: 1 1 0;
   flex-direction: column;
-  gap: 4px;
-  min-width: 0;
+  gap: 6px;
+  min-width: min(220px, 100%);
 }
 
 .label {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .input {
   box-sizing: border-box;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text);
+  min-height: 44px;
+  padding: 0 14px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--ink);
   font: inherit;
+}
+
+.input::placeholder {
+  color: var(--muted);
+}
+
+.input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+  border-color: transparent;
 }
 
 .hint {
   margin: 0;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }

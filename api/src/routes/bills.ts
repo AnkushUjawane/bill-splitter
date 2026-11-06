@@ -102,14 +102,15 @@ type BillWithShares = {
 }
 
 // Lists the bills of a home, newest first, each with its shares (in member order).
-// The web page needs this to show bills; the member name saves it a second request.
+// The web page needs this to show bills. It also gets the home's name for the page title,
+// and each share carries the member's name, so no second request is needed.
 bills.get('/:homeId/bills', async (c) => {
   const homeId = c.req.param('homeId')
   const db = c.env.DB
 
   // One batch = one consistent snapshot for the home check and the bill rows.
-  const [home, rows] = await db.batch<{ id: string } | BillShareRow>([
-    db.prepare('SELECT id FROM homes WHERE id = ?').bind(homeId),
+  const [home, rows] = await db.batch<{ id: string; name: string } | BillShareRow>([
+    db.prepare('SELECT id, name FROM homes WHERE id = ?').bind(homeId),
     db
       .prepare(
         `SELECT b.id AS billId, b.title AS title, b.total_cents AS totalCents,
@@ -124,7 +125,8 @@ bills.get('/:homeId/bills', async (c) => {
       .bind(homeId),
   ])
 
-  if (!home?.results.length) throw new HttpError(404, 'Home not found')
+  const homeRow = home?.results[0] as { id: string; name: string } | undefined
+  if (!homeRow) throw new HttpError(404, 'Home not found')
 
   // The rows are flat (one per share). Group them back into bills, keeping order.
   const grouped = new Map<string, BillWithShares>()
@@ -150,5 +152,5 @@ bills.get('/:homeId/bills', async (c) => {
     })
   }
 
-  return c.json({ bills: [...grouped.values()] })
+  return c.json({ home: { id: homeRow.id, name: homeRow.name }, bills: [...grouped.values()] })
 })

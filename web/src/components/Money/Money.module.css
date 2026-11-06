@@ -1,0 +1,48 @@
+.money {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.symbol {
+  margin-right: 0.06em;
+  font-size: 0.55em;
+  font-weight: 700;
+  vertical-align: 0.55em;
+}
+
+.cents {
+  font-size: 0.55em;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.md {
+  font-size: 1.15rem;
+}
+
+.lg {
+  font-size: 1.6rem;
+}
+
+.xl {
+  font-size: 2.1rem;
+}
+
+.hero {
+  font-size: clamp(3.75rem, 17vw, 7rem);
+  font-stretch: 85%;
+  letter-spacing: -0.04em;
+}
+
+/* Hidden on screen, read by screen readers. */
+.plain {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

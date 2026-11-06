@@ -1,49 +1,99 @@
-.date {
-  margin: 4px 0 8px;
-  color: var(--muted);
-  font-size: 0.9rem;
+.bill {
+  padding: 24px 0 8px;
+  border-top: 3px solid var(--ink);
 }
 
-.list {
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.date {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.progress {
   margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.shares {
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .share + .share {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--line);
 }
 
-.row {
-  display: flex;
+/* Same four columns on every row, so "Pay" and "Paid" never change the row height. */
+.shareRow {
+  display: grid;
+  grid-template-columns: 22px 1fr auto 84px;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  padding: 6px 0;
+  min-height: 52px;
 }
 
-.actions {
+.name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.dot {
+  position: relative;
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--member);
+  border-radius: 50%;
+}
+
+.dotPaid {
+  background: var(--member);
+}
+
+/* The tick, drawn with two borders of a small rotated box. */
+.dotPaid::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--on-member);
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.action {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  justify-content: flex-end;
 }
 
 .paid {
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: var(--ok-bg);
-  color: var(--ok-text);
-  font-size: 0.85rem;
-  font-weight: 600;
+  color: var(--ok);
+  font-weight: 700;
 }
 
 .error {
-  margin: 4px 0 0;
-  color: var(--err-text);
-  font-size: 0.9rem;
-}
-
-.title {
-  margin: 0;
-  font-size: 1.05rem;
+  margin: 0 0 12px 34px;
+  color: var(--err);
+  font-size: 0.95rem;
+  font-weight: 600;
 }

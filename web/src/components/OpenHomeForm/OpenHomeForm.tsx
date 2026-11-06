@@ -1,12 +1,11 @@
 import { useNavigate } from '@tanstack/react-router'
 import { type FormEvent, useState } from 'react'
 import { Button } from '../Button/Button'
-import { Card } from '../Card/Card'
 import { Notice } from '../Notice/Notice'
 import { TextField } from '../TextField/TextField'
 import styles from './OpenHomeForm.module.css'
 
-export function OpenHomeForm() {
+export function OpenHomeForm({ onCancel }: { onCancel: () => void }) {
   const navigate = useNavigate()
   const [value, setValue] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +21,7 @@ export function OpenHomeForm() {
   }
 
   return (
-    <Card title="Open an existing home">
+    <div>
       <form onSubmit={handleSubmit} className={styles.form}>
         <TextField
           label="Home ID"
@@ -30,11 +29,14 @@ export function OpenHomeForm() {
           onChange={setValue}
           placeholder="Paste a home ID"
         />
-        <Button type="submit" variant="secondary">
-          Open
-        </Button>
+        <div className={styles.buttons}>
+          <Button type="submit">Open home</Button>
+          <Button variant="secondary" onClick={onCancel}>
+            Cancel
+          </Button>
+        </div>
       </form>
       {error && <Notice tone="error">{error}</Notice>}
-    </Card>
+    </div>
   )
 }

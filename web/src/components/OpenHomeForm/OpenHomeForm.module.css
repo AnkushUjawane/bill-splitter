@@ -1,49 +1,11 @@
-.title {
-  margin: 0 0 8px;
-  font-size: 1.15rem;
-}
-
 .form {
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
+  gap: 12px;
+}
+
+.buttons {
+  display: flex;
   gap: 8px;
-}
-
-.error {
-  margin: 4px 0 0;
-  color: var(--err-text);
-  font-size: 0.9rem;
-}
-
-.help {
-  margin-top: 12px;
-}
-
-.code {
-  overflow-x: auto;
-  padding: 12px;
-  border-radius: 8px;
-  background: var(--bg);
-  font-size: 0.8rem;
-}
-
-/* Hidden on screen, still read by screen readers. */
-.hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-}
-
-.input {
-  box-sizing: border-box;
-  flex: 1;
-  min-width: 0;
-  padding: 8px 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text);
-  font: inherit;
 }

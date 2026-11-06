@@ -3,49 +3,105 @@
 }
 
 .page {
-  --bg: #f6f7f9;
-  --card: #ffffff;
-  --text: #1c2430;
-  --muted: #667085;
-  --border: #dde1e7;
-  --accent: #2457d6;
-  --accent-text: #ffffff;
-  --ok-bg: #e3f6e8;
-  --ok-text: #1b6b34;
-  --err-bg: #fdeaea;
-  --err-text: #a61b1b;
+  --paper: #f3f4fb;
+  --surface: #ffffff;
+  --ink: #1b1f3b;
+  --muted: #5e6385;
+  --line: #dadcee;
+  --focus: #4b5bff;
+
+  --ok: #0b7a55;
+  --on-ok: #ffffff;
+  --ok-soft: #ddf5ea;
+  --err: #b3261e;
+  --on-err: #ffffff;
+  --err-soft: #fde9e7;
+
+  /* One color per housemate. Dark ink on top of every one of them stays readable. */
+  --member-0: #ff7a8a;
+  --member-1: #6ea8ff;
+  --member-2: #4fd6a8;
+  --member-3: #ffd24d;
+  --member-4: #a98bff;
+  --member-5: #ff9f5a;
+  --on-member: #1b1f3b;
 
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
 @media (prefers-color-scheme: dark) {
   .page {
-    --bg: #12161c;
-    --card: #1a2029;
-    --text: #ffffff;
-    --muted: #9aa4b2;
-    --border: #2b3441;
-    --accent: #6c93ff;
-    --accent-text: #0d1117;
-    --ok-bg: #173324;
-    --ok-text: #7fdc9f;
-    --err-bg: #3a1a1a;
-    --err-text: #ff9b9b;
+    --paper: #12142a;
+    --surface: #1c1f3d;
+    --ink: #eceeff;
+    --muted: #a3a8cc;
+    --line: #33376b;
+    --focus: #8f9bff;
+
+    --ok: #5fd9b0;
+    --on-ok: #0e1a15;
+    --ok-soft: #163a30;
+    --err: #ff9b94;
+    --on-err: #3d1d22;
+    --err-soft: #3d1d22;
   }
 }
 
 .column {
   box-sizing: border-box;
-  max-width: 640px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 24px 16px 64px;
+  padding: 20px 20px 96px;
 }
 
-.title {
-  margin: 0 0 16px;
-  font-size: 1.6rem;
+.header {
+  padding-bottom: 8px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.brand:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+/* The logo is a tiny split bar: three housemates, three colors. */
+.mark {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.mark span {
+  height: 14px;
+  border-radius: 3px;
+}
+
+.mark span:nth-child(1) {
+  width: 12px;
+  background: var(--member-0);
+}
+
+.mark span:nth-child(2) {
+  width: 8px;
+  background: var(--member-2);
+}
+
+.mark span:nth-child(3) {
+  width: 10px;
+  background: var(--member-1);
 }

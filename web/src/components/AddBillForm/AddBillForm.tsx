@@ -8,7 +8,7 @@ import { Notice } from '../Notice/Notice'
 import { TextField } from '../TextField/TextField'
 import styles from './AddBillForm.module.css'
 
-type Props = { homeId: string; onCreated: () => void }
+type Props = { homeId: string; onCreated: () => void; onClose: () => void }
 
 // Shows what the typed amount means in dollars, as a help while typing.
 function amountHint(text: string): string {
@@ -17,7 +17,7 @@ function amountHint(text: string): string {
   return 'The amount in whole cents. For example, 1000 means $10.00.'
 }
 
-export function AddBillForm({ homeId, onCreated }: Props) {
+export function AddBillForm({ homeId, onCreated, onClose }: Props) {
   const [title, setTitle] = useState('')
   const [amount, setAmount] = useState('')
   const action = useAction()
@@ -59,9 +59,14 @@ export function AddBillForm({ homeId, onCreated }: Props) {
           placeholder="1000"
           hint={amountHint(amount)}
         />
-        <Button type="submit" disabled={action.pending} className={styles.submit}>
-          {action.pending ? 'Adding…' : 'Add bill'}
-        </Button>
+        <div className={styles.buttons}>
+          <Button type="submit" disabled={action.pending}>
+            {action.pending ? 'Adding…' : 'Add bill'}
+          </Button>
+          <Button variant="secondary" onClick={onClose}>
+            Cancel
+          </Button>
+        </div>
       </form>
       {action.error && <Notice tone="error">{action.error}</Notice>}
     </Card>
