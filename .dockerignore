@@ -1,0 +1,24 @@
+# Keep the image small and the build cache stable.
+# Dependencies are installed inside the image, never copied from your computer.
+**/node_modules
+**/dist
+**/.wrangler
+api/worker-configuration.d.ts
+
+.git
+.gitignore
+.gitattributes
+
+*.log
+.env
+.env.*
+.dev.vars
+.DS_Store
+.vscode
+.idea
+
+# Not needed to run the app
+Dockerfile
+.dockerignore
+compose.yaml
+README.md

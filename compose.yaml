@@ -1,0 +1,25 @@
+# One command to run the whole app:
+#
+#   docker compose up --build
+#
+# Then open http://localhost:5173
+#
+# Other things you can do:
+#   docker compose run --rm app pnpm test                  run the API tests
+#   docker compose run --rm app pnpm check                 lint and format check
+#   docker compose run --rm app pnpm typecheck             type check
+#   docker compose down -v                                 stop and delete the saved database
+services:
+  app:
+    build: .
+    # A tiny init process, so Ctrl+C stops the container at once.
+    init: true
+    ports:
+      - "5173:5173" # web page
+      - "8787:8787" # API
+    volumes:
+      # Keeps the local D1 database between runs.
+      - db-data:/app/api/.wrangler
+
+volumes:
+  db-data:
